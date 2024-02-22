@@ -1,0 +1,29 @@
+<h2>シフト希望一覧（{{month}}月{{h}}）</h2>
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            {% for day in days %}
+                <th>{{ day }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in data %}
+            <tr>
+                {% for j in i %}
+                    <td style = 'text-align:center'>
+                        {% if forloop.first %}
+                            <a class='btn' href="{% url 'member_shift' j.id%}">{{j.name}}</a>
+                        {% else %}
+                            {{j}}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>
+    <a href="{% url 'home' %}">トップへ</a>
+</p>

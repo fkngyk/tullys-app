@@ -1,0 +1,23 @@
+<h2>フェロー一覧</h2>
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for member in members %}
+        <tr>
+            <td style = 'text-align:center'><a class='btn' href="{% url 'member_detail' member.id%}">{{member.id}}</a></td>
+            <td style = 'text-align:center'>{{member.name}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>
+    <a class="btn btn-primary" href="{% url 'member_new' %}">新規登録</a>
+</p>
+<p>
+    <a href="{% url 'home' %}">トップへ</a>
+</p>

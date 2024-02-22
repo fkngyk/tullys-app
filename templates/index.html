@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for i in num %}
+{{ i }}<br>
+{% endfor %}
+</p>
+{% if is_weekday %}
+<p>Today is weekday.</p>
+{% else %}
+<p>Today is holiday.</p>
+{% endif %}
+<p>
+{{app|length}}
+</p>
+<p>
+{{app|title}}
+</p>
+<p>
+{{now_date|date:"Y-m-d"}}
+</p>
+{#眠い#}
+{% endblock %}

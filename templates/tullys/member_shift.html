@@ -1,0 +1,21 @@
+<h2>希望シフト登録（{{month}}月{{h}}）</h2>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" name="button">保存</button>
+</form>
+
+<h2>希望シフト削除</h2>
+削除したい時間帯を選択して削除ボタンをクリックしてください。
+<form action="shift_delete" method="post">
+    {% csrf_token %}
+    {% for shift in shifts %}
+    <p>
+    <input type="checkbox" name="checks" value="{{forloop.counter}}" />{{shift.day}}日:{{shift.start_time}}-{{shift.finish_time}}
+    </p>
+    {% endfor %}
+    <input type="submit" id="button" name="button" value="送信">
+</form>
+<p>
+    <a href="{% url 'shift_index' %}">シフト希望一覧へ</a>
+</p>

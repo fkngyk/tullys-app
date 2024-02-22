@@ -1,0 +1,11 @@
+<h2>フェロー詳細</h2>
+<p>ID：{{ member.id }}</p>
+<p>名前：{{ member.name }}</p>
+<p>パスワード：{{ member.password }}</p>
+<p>
+    <a href="{% url 'member_edit' member.id %}">フェロー情報変更</a>
+    <a href="{% url 'member_delete' member.id %}">フェロー情報削除</a>
+</p>
+<p>
+    <a href="{% url 'member_index' %}">フェロー一覧へ</a>
+</p>
