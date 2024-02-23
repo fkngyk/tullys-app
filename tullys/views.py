@@ -172,7 +172,8 @@ def upload(request):
     if request.method == 'POST':
         form = AttachmentForm(request.POST, request.FILES)
         if form.is_valid():
-            os.remove('media/files/原本.xlsx')
+            if os.path.exists('media/files/原本.xlsx'):
+                os.remove('media/files/原本.xlsx')
             form.save()
             return render(request, 'tullys/complete.html')
     else:
