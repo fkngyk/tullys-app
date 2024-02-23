@@ -10,16 +10,12 @@ import locale
 import os
 import math
 
-def input(n, data, year, month, day, h, mode):
+def input(n, data, year, month, day):
     #日本語に設定
     locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
     
-    #シフト表フォルダがなければ作る
-    if os.path.exists("シフト表")==False:
-        os.mkdir('シフト表')
-    
     #原本のファイルを読み込む
-    wb1 = xl.load_workbook('原本/原本（シフト表）.xlsx')
+    wb1 = xl.load_workbook('media/files/原本.xlsx')
     ws1 = wb1.worksheets[0]
     ws2 = wb1.worksheets[1]
     
@@ -63,18 +59,6 @@ def input(n, data, year, month, day, h, mode):
             ws1.cell(1,18).font = xl.styles.fonts.Font(color='FF0000',size=12)
             ws1.sheet_properties.tabColor = 'FF0000'
             
-            t = str(ws2.cell(18,3).value)
-            o = t.split(":")
-            open[day_2][0] = int(o[0])
-            open[day_2][1] = int(o[1])
-            t = str(ws2.cell(18,5).value)
-            c = t.split(":")
-            close[day_2][0] = int(c[0])
-            close[day_2][1] = int(c[1])
-            
-            for j in range(23-open[day_2][0]):
-                ws1.cell(9,26 + j*4).value = ws2.cell(18,19 + j*4).value
-        elif the_day.weekday() == 5:
             t = str(ws2.cell(16,3).value)
             o = t.split(":")
             open[day_2][0] = int(o[0])
@@ -83,34 +67,46 @@ def input(n, data, year, month, day, h, mode):
             c = t.split(":")
             close[day_2][0] = int(c[0])
             close[day_2][1] = int(c[1])
-            ws1.sheet_properties.tabColor = '00CCFF'
-            ws1['R1'].font = xl.styles.fonts.Font(color='00CCFF', size=12)
-            for j in range(23-open[day_2][0]):
-                ws1.cell(10,22 + j*4).value = ws2.cell(16,15 + j*4).value
-        elif the_day.weekday() == 6:
-            t = str(ws2.cell(18,3).value)
+            
+            for j in range(18):
+                ws1.cell(9,14 + j*4).value = ws2.cell(16,7 + j*4).value
+        elif the_day.weekday() == 5:
+            t = str(ws2.cell(14,3).value)
             o = t.split(":")
             open[day_2][0] = int(o[0])
             open[day_2][1] = int(o[1])
-            t = str(ws2.cell(18,5).value)
+            t = str(ws2.cell(14,5).value)
+            c = t.split(":")
+            close[day_2][0] = int(c[0])
+            close[day_2][1] = int(c[1])
+            ws1.sheet_properties.tabColor = '00CCFF'
+            ws1['R1'].font = xl.styles.fonts.Font(color='00CCFF', size=12)
+            for j in range(18):
+                ws1.cell(9,14 + j*4).value = ws2.cell(14,7 + j*4).value
+        elif the_day.weekday() == 6:
+            t = str(ws2.cell(16,3).value)
+            o = t.split(":")
+            open[day_2][0] = int(o[0])
+            open[day_2][1] = int(o[1])
+            t = str(ws2.cell(16,5).value)
             c = t.split(":")
             close[day_2][0] = int(c[0])
             close[day_2][1] = int(c[1])
             ws1.sheet_properties.tabColor = 'FF0000'
             ws1['R1'].font = xl.styles.fonts.Font(color='FF0000', size=12)
-            for j in range(23-open[day_2][0]):
-                ws1.cell(9,26 + j*4).value = ws2.cell(18,19 + j*4).value
+            for j in range(18):
+                ws1.cell(9,14 + j*4).value = ws2.cell(16,7 + j*4).value
         else:
-            t = str(ws2.cell(6+the_day.weekday()*2,3).value)
+            t = str(ws2.cell(4+the_day.weekday()*2,3).value)
             o = t.split(":")
             open[day_2][0] = int(o[0])
             open[day_2][1] = int(o[1])
-            t = str(ws2.cell(6+the_day.weekday()*2,5).value)
+            t = str(ws2.cell(4+the_day.weekday()*2,5).value)
             c = t.split(":")
             close[day_2][0] = int(c[0])
             close[day_2][1] = int(c[1])
-            for j in range(23-open[day_2][0]):
-                ws1.cell(9,18 + j*4).value = ws2.cell(6 + the_day.weekday()*2,11 + j*4).value
+            for j in range(18):
+                ws1.cell(9,14 + j*4).value = ws2.cell(4 + the_day.weekday()*2,7 + j*4).value
         
         day += 1
         day_2 += 1
@@ -176,9 +172,5 @@ def input(n, data, year, month, day, h, mode):
                     ws1.cell(45+2*cnt[date],k+x).value = "o"
                 
                 cnt[date] += 1
-            
-    wb1.save("シフト表/" + "西新宿" + str(month) + "月" + h + "シフト" + ".xlsx")
-
-    wb1.close()
-
-    print("Done.")
+    
+    return wb1

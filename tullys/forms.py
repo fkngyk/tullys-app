@@ -1,6 +1,7 @@
 from django import forms
 from .models import Member
 from .models import Shift
+from .models import Attachment
 
 class MemberForm(forms.ModelForm):
     class Meta:
@@ -22,3 +23,8 @@ class ShiftForm(forms.ModelForm):
             'start_time':'開始時刻',
             'finish_time':'終了時刻'
         }
+
+class AttachmentForm(forms.ModelForm):
+    class Meta:
+        model = Attachment
+        fields = ('files',)

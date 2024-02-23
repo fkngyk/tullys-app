@@ -14,5 +14,5 @@ urlpatterns = [
     path("<int:member_id>/shift", views.member_shift, name="member_shift"),
     path("<int:member_id>/shift_delete", views.shift_delete, name="shift_delete"),
     path('shift_input', views.shift_input, name = 'shift_input'),
-    path('test', views.hello, name = 'test'),
+    path('upload', views.upload, name = 'upload'),
 ] 

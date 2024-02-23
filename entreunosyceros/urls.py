@@ -21,6 +21,5 @@ from . import test
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('test/',test.test, name='test'),
-    path('myapp/', include('myapp.urls')),
     path('tullys/', include('tullys.urls'))
 ]

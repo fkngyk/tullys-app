@@ -14,3 +14,6 @@ class Shift(models.Model):
     day = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(31)])
     start_time = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(24)])
     finish_time = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(24)])
+
+class Attachment(models.Model):
+    files = models.FileField(upload_to = 'files')

@@ -3,19 +3,18 @@ from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from .models import Member
 from .models import Shift
+from .models import Attachment
 from .forms import MemberForm
 from .forms import ShiftForm
+from .forms import AttachmentForm
 import datetime
+import os
 from datetime import date
 from datetime import datetime
 import calendar
 from .function import input
-
-
 from django.http import HttpResponse
 
-def hello(request):
-        return HttpResponse("Hello, Nginx.")
 # Create your views here.
 #現在の時刻を取得
 now = datetime.now()
@@ -161,5 +160,21 @@ def shift_input(request):
                 data[cnt][shift.day] = str(shift.start_time) + '-' + str(shift.finish_time)
             else:
                 cnt += 1
-    input(n, data, year, month, day, h, mode)
-    return render(request, 'tullys/complete.html')
+    wb = input(n, data, year, month, day)
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=%s' % 'shift.xlsx'
+
+    wb.save(response)
+
+    return response
+
+def upload(request):
+    if request.method == 'POST':
+        form = AttachmentForm(request.POST, request.FILES)
+        if form.is_valid():
+            os.remove('media/files/原本.xlsx')
+            form.save()
+            return render(request, 'tullys/complete.html')
+    else:
+        form = AttachmentForm()
+    return render(request, 'tullys/upload.html', {'form':form})
