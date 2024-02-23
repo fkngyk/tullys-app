@@ -15,7 +15,7 @@ def input(n, data, year, month, day):
     locale.setlocale(locale.LC_TIME, 'ja_JP.UTF-8')
     
     #原本のファイルを読み込む
-    wb1 = xl.load_workbook('media/files/原本.xlsx')
+    wb1 = xl.load_workbook('/home/fkngyk/fkngyk.pythonanywhere.com/media/files/原本.xlsx')
     ws1 = wb1.worksheets[0]
     ws2 = wb1.worksheets[1]
     
