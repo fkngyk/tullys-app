@@ -20,7 +20,7 @@ from django.http import HttpResponse
 now = datetime.now()
 
 #作成するシフトの年月日を設定
-if now.month == 12 and now.day >= 15:
+if now.month == 12 and now.day >= 16:
     year = now.year + 1
     month = 1
     day = 1
@@ -28,7 +28,7 @@ if now.month == 12 and now.day >= 15:
     mode = 0
 else:
     year = now.year
-    if now.day >= 17:
+    if now.day >= 16:
         month = now.month + 1
         day = 1
         h = "前半"
@@ -40,13 +40,21 @@ else:
         mode = 1
 
 #作成するシフトの日数を設定
-if(now.day <= 17):
+if(now.day <= 15):
     n = calendar.monthrange(year, month)[1] - 15
 else:
     n = 15
 
 #ここから下は各ページの関数
 def home(request):
+    if mode == 0:
+        shifts = Shift.objects.filter(day__gte = 16)
+        for shift in shifts:
+            shift.delete()
+    else:
+        shifts = Shift.objects.filter(day__lte = 15)
+        for shift in shifts:
+            shift.delete()
     return render(request, 'tullys/home.html')
 
 def member_index(request):
@@ -91,7 +99,10 @@ def member_delete(request, member_id):
     
 def shift_index(request):
     members = Member.objects.all()
-    shifts = Shift.objects.all().order_by('person', 'day',)
+    if mode == 0:
+        shifts = Shift.objects.filter(day__lte=15).order_by('person', 'day',)
+    else:
+        shifts = Shift.objects.filter(day__gte=16).order_by('person', 'day',)
     days = []
     for i in range(n):
         days.append((i+1) + 15*mode)
